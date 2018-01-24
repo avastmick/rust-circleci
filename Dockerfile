@@ -24,12 +24,12 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
     rustup install nightly && \
     rustup default nightly
 
-# ENV RUSTFMT_VERSION 0.3.1  
-# RUN wget https://github.com/rust-lang-nursery/rustfmt/archive/${RUSTFMT_VERSION}.tar.gz && \  
-#     tar xzf ${RUSTFMT_VERSION}.tar.gz && rm ${RUSTFMT_VERSION}.tar.gz && \
-#     cd rustfmt-${RUSTFMT_VERSION} && \
-#     $HOME/.cargo/bin/cargo install --path . && \
-#     cd .. && rm -rf rustfmt-${RUSTFMT_VERSION}
+ENV RUSTFMT_VERSION 0.3.1  
+RUN wget https://github.com/rust-lang-nursery/rustfmt/archive/${RUSTFMT_VERSION}.tar.gz && \  
+    tar xzf ${RUSTFMT_VERSION}.tar.gz && rm ${RUSTFMT_VERSION}.tar.gz && \
+    cd rustfmt-${RUSTFMT_VERSION} && \
+    $HOME/.cargo/bin/cargo install --path --force . && \
+    cd .. && rm -rf rustfmt-${RUSTFMT_VERSION}
 
 RUN bash -l -c 'echo $(rustc --print sysroot)/lib >> /etc/ld.so.conf' && \
     bash -l -c 'echo /usr/local/lib >> /etc/ld.so.conf' && \ 
